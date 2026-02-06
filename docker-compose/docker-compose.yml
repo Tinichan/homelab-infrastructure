@@ -1,0 +1,74 @@
+version: "3.8"
+
+services:
+    portainer:
+        image: portainer/portainer-ce:latest
+        container_name: portainer
+        restart: always
+        ports:
+            - "9000:9000"
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - portainer_data:/data
+
+    homepage:
+        image: ghcr.io/gethomepage/homepage:latest
+        container_name: homepage
+        restart: always
+        ports:
+            - "80:3000"
+        volumes:
+            - ./homepage/config:/app/config
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+        environment:
+            HOMEPAGE_ALLOWED_HOSTS: "homeserver"
+
+    n8n:
+        image: n8nio/n8n:latest
+        container_name: n8n
+        restart: always
+        ports:
+            - "5678:5678"
+        environment:
+            - TZ=Europe/Oslo
+            - GENERIC_TIMEZONE=Europe/Oslo
+            - N8N_SECURE_COOKIE=false
+            - N8N_BASIC_AUTH_ACTIVE=true
+            - N8N_BASIC_AUTH_USER=admin
+            - N8N_BASIC_AUTH_PASSWORD=supersecret
+        volumes:
+            - n8n_data:/home/node/.n8n
+            - storage:/mnt/storage/
+
+    minecraft:
+        image: itzg/minecraft-server:latest
+        container_name: minecraft
+        restart: unless-stopped
+        environment:
+            EULA: "TRUE"
+            MEMORY: "4G"
+        ports:
+            - "25565:25565"
+        volumes:
+            - minecraft_data:/data
+
+    # opencloud:
+    #     image: opencloudeu/opencloud:latest
+    #     container_name: opencloud
+    #     restart: always
+    #     ports:
+    #         - "8081:80"
+    #     environment:
+    #         - JWT_SECRET=9f0182ad2d9bd160eaeaf31f1954f169ff322318409b02c6ec4c9429236e586c
+    #     volumes:
+    #         - opencloud_data:/var/opencloud/data
+    #         - opencloud_config:/var/opencloud/config
+
+volumes:
+    portainer_data:
+    # dashy_config:
+    n8n_data:
+    storage:
+    minecraft_data:
+    # opencloud_data:
+    # opencloud_config:
