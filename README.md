@@ -12,14 +12,14 @@ Personal homelab running on Raspberry Pi with Docker.
 
 ### Infrastructure
 - **Platform:** Raspberry Pi
-- **OS:** [укажи свою ОС, например Raspberry Pi OS]
+- **OS:** Rasbian
 - **Container Runtime:** Docker + Docker Compose
 - **Storage:** Docker volumes
 
 ## Quick Start
 ```bash
 # Clone repository
-git clone [your-repo-url]
+git clone https://github.com/Tinichan/homelab-infrastructure.git
 
 # Start services
 cd docker-compose
@@ -32,9 +32,9 @@ docker-compose up -d
 │      Raspberry Pi               │
 │  ┌───────────────────────────┐  │
 │  │   Docker Engine           │  │
-│  │  ┌─────────┐ ┌─────────┐ │  │
-│  │  │homepage │ │   n8n   │ │  │
-│  │  └─────────┘ └─────────┘ │  │
+│  │  ┌─────────┐ ┌─────────┐  │  │
+│  │  │homepage │ │   n8n   │  │  │
+│  │  └─────────┘ └─────────┘  │  │
 │  │  ┌─────────┐              │  │
 │  │  │portainer│              │  │
 │  │  └─────────┘              │  │
